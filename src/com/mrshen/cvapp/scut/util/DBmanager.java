@@ -16,7 +16,7 @@ public class DBmanager {
 
 	private final static String DB_URL = "jdbc:mysql://localhost:3306/mycook";
 	private final static String USER = "root";
-	private final static String PASSWORD = "mrshen";
+	private final static String PASSWORD = "scutb3535";
 	private final static String DRIVER = "com.mysql.jdbc.Driver";
 	
 //	private static final String SQL_ROOT = "SELECT * FROM ";
