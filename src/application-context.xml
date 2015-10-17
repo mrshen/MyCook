@@ -22,6 +22,18 @@
 
 	<!-- 注解扫描包 -->
 	<context:component-scan base-package="com.mrshen.cvapp.scut" />
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/WEB-INF/property.properties</value>
+		</property>
+	</bean>
+	<bean id="propertyConfig" class="com.mrshen.cvapp.scut.model.ConfigInfo">
+		<property name="jdbcDriver" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.connection}" />
+		<property name="jdbcUsername" value="${jdbc.username}" />
+		<property name="jdbcPassword" value="${jdbc.password}" />
+	</bean>
 
 	<!-- 配置data source -->
 <!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">

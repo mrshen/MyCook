@@ -8,26 +8,33 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.mrshen.cvapp.scut.model.ConfigInfo;
 import com.mrshen.cvapp.scut.model.CuisineEntity;
 import com.mrshen.cvapp.scut.model.MusicEntity;
 import com.mrshen.cvapp.scut.model.EntityList;
 
 public class DBmanager {
 
-	private final static String DB_URL = "jdbc:mysql://localhost:3306/mycook";
+	/*private final static String DB_URL = "jdbc:mysql://localhost:3306/mycook";
 	private final static String USER = "root";
-	private final static String PASSWORD = "scutb3535";
-	private final static String DRIVER = "com.mysql.jdbc.Driver";
+	private final static String PASSWORD = "mrshen";
+	private final static String DRIVER = "com.mysql.jdbc.Driver";*/
+//	@Autowired
+//	private ConfigInfo configInfo;
 	
 //	private static final String SQL_ROOT = "SELECT * FROM ";
 	
-	public static List<EntityList> getMusicList(String musicType) {
-		
-		Connection connection = null;
+	public List<EntityList> getMusicList(String musicType, Connection connection) {
+//		Connection connection = null;
 		List<EntityList> lists = new ArrayList<EntityList>();
 		try {
-			Class.forName(DRIVER);
-			connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+			/*Class.forName(DRIVER);
+			connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);*/
+//			Class.forName(configInfo.getJdbcDriver());
+//			connection = DriverManager.getConnection(configInfo.getJdbcUrl(), configInfo.getJdbcUsername(), configInfo.getJdbcPassword());
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT songId, songName FROM music WHERE songType=" + musicType);
 			
@@ -37,9 +44,6 @@ public class DBmanager {
 				EntityList user = new EntityList(id, name);
 				lists.add(user);
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,13 +61,15 @@ public class DBmanager {
 		return lists;
 	}
 	
-	public static MusicEntity getMusicItem(String itemId) {
+	public MusicEntity getMusicItem(String itemId, Connection connection) {
 			
-			Connection connection = null;
+//			Connection connection = null;
 			MusicEntity item = null;
 			try {
-				Class.forName(DRIVER);
-				connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+				/*Class.forName(DRIVER);
+				connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);*/
+//				Class.forName(configInfo.getJdbcDriver());
+//				connection = DriverManager.getConnection(configInfo.getJdbcUrl(), configInfo.getJdbcUsername(), configInfo.getJdbcPassword());
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM music WHERE songId=" + itemId);
 				
@@ -74,9 +80,6 @@ public class DBmanager {
 					String type = resultSet.getString("songType");
 					item = new MusicEntity(id, name, addr, type);
 				}
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -94,13 +97,15 @@ public class DBmanager {
 			return item;
 		}
 	
-	public static List<EntityList> getCuisineList(String cuisineType) {
+	public List<EntityList> getCuisineList(String cuisineType, Connection connection) {
 			
-			Connection connection = null;
+//			Connection connection = null;
 			List<EntityList> lists = new ArrayList<EntityList>();
 			try {
-				Class.forName(DRIVER);
-				connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+				/*Class.forName(DRIVER);
+				connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);*/
+//				Class.forName(configInfo.getJdbcDriver());
+//				connection = DriverManager.getConnection(configInfo.getJdbcUrl(), configInfo.getJdbcUsername(), configInfo.getJdbcPassword());
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT dishId, dishName FROM cuisine WHERE dishType=" + cuisineType);
 				
@@ -110,9 +115,6 @@ public class DBmanager {
 					EntityList user = new EntityList(id, name);
 					lists.add(user);
 				}
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -130,12 +132,14 @@ public class DBmanager {
 			return lists;
 		}
 	
-	public static CuisineEntity getCuisineItem(String itemId) {
+	public CuisineEntity getCuisineItem(String itemId, Connection connection) {
 		CuisineEntity item = null;
-		Connection connection = null;
+//		Connection connection = null;
 		try {
-			Class.forName(DRIVER);
-			connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+			/*Class.forName(DRIVER);
+			connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);*/
+//			Class.forName(configInfo.getJdbcDriver());
+//			connection = DriverManager.getConnection(configInfo.getJdbcUrl(), configInfo.getJdbcUsername(), configInfo.getJdbcPassword());
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM cuisine WHERE dishId=" + itemId);
 			
@@ -147,9 +151,6 @@ public class DBmanager {
 				int type = resultSet.getInt("dishType");
 				item = new CuisineEntity(id, name, vname, desc, type);
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
