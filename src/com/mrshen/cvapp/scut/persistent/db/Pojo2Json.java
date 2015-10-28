@@ -1,4 +1,4 @@
-package com.mrshen.cvapp.scut.util;
+package com.mrshen.cvapp.scut.persistent.db;
 
 import java.io.IOException;
 

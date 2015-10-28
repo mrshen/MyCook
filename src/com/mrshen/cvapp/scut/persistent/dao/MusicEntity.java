@@ -1,16 +1,16 @@
-package com.mrshen.cvapp.scut.model;
+package com.mrshen.cvapp.scut.persistent.dao;
 
-public class MusicEntity {
+public class MusicEntity extends BaseDao{
 	private int id;
 	private String name;
 	private String addr;
 	//	1:国语 2:港台 3:外语
-	private String type;
+	private int type;
 	
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public String getAddr() {
@@ -31,7 +31,7 @@ public class MusicEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public MusicEntity(int id, String name, String addr, String type) {
+	public MusicEntity(int id, String name, String addr, int type) {
 		super();
 		this.id = id;
 		this.name = name;

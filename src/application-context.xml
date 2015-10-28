@@ -23,7 +23,7 @@
 	<!-- 注解扫描包 -->
 	<context:component-scan base-package="com.mrshen.cvapp.scut" />
 	
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<!-- <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>/WEB-INF/property.properties</value>
 		</property>
@@ -33,16 +33,25 @@
 		<property name="jdbcUrl" value="${jdbc.connection}" />
 		<property name="jdbcUsername" value="${jdbc.username}" />
 		<property name="jdbcPassword" value="${jdbc.password}" />
-	</bean>
+	</bean> -->
 
 	<!-- 配置data source -->
-<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mysql://localhost:3306/mycook?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="mrshen"></property>
-		<property name="initialSize" value="10"></property>
-	</bean> -->
+		<property name="initialSize" value="5"></property>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	<bean id="jdbcCuisine" class="com.mrshen.cvapp.scut.persistent.db.JdbcCuisineEntity">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
+	<bean id="jdbcMusic" class="com.mrshen.cvapp.scut.persistent.db.JdbcMusicEntity">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
 	
 	<!-- 配置entity manager factory -->
 	<!-- <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

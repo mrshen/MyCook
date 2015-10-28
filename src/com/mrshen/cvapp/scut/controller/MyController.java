@@ -1,8 +1,5 @@
 package com.mrshen.cvapp.scut.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,42 +10,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mrshen.cvapp.scut.model.ConfigInfo;
-import com.mrshen.cvapp.scut.model.CuisineEntity;
-import com.mrshen.cvapp.scut.model.MusicEntity;
-import com.mrshen.cvapp.scut.model.EntityList;
-import com.mrshen.cvapp.scut.util.DBmanager;
-import com.mrshen.cvapp.scut.util.Pojo2Json;
+import com.mrshen.cvapp.scut.persistent.dao.BaseDao;
+import com.mrshen.cvapp.scut.persistent.dao.CuisineEntity;
+import com.mrshen.cvapp.scut.persistent.dao.EntityList;
+import com.mrshen.cvapp.scut.persistent.dao.MusicEntity;
+import com.mrshen.cvapp.scut.persistent.db.JdbcCuisineEntity;
+import com.mrshen.cvapp.scut.persistent.db.JdbcMusicEntity;
+import com.mrshen.cvapp.scut.persistent.db.Pojo2Json;
 
 @Controller
 @RequestMapping("/")
 public class MyController {
 	
 	@Autowired
-	private ConfigInfo configInfo;
-	
+	private JdbcCuisineEntity jdbcCuisineEntity;
+	@Autowired
+	private JdbcMusicEntity jdbcMusicEntity;
+
 	@RequestMapping("/cuisine/{cuisineType}")
 	@ResponseBody
 	public  String cuisineLists(@PathVariable String cuisineType, HttpServletRequest request) {
 		String result = null;
 		String itemID = null;
-		Connection connection = null;
-		try {
-			Class.forName(configInfo.getJdbcDriver());
-			connection = DriverManager.getConnection(configInfo.getJdbcUrl(), configInfo.getJdbcUsername(), configInfo.getJdbcPassword());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		itemID = request.getParameter("id");
 		if (itemID == null) {
-			List<EntityList> list = new DBmanager().getCuisineList(cuisineType, connection);
-			result = Pojo2Json.pojo2String(list);
+			List<BaseDao> lists = jdbcCuisineEntity.getList();
+			result = Pojo2Json.pojo2String(lists);
 		} else {
-			CuisineEntity item = new DBmanager().getCuisineItem(itemID, connection);
+			CuisineEntity item = (CuisineEntity)jdbcCuisineEntity.getObjById(Integer.parseInt(itemID));
 			result = Pojo2Json.pojo2String(item);
 		}
 		return result;
@@ -59,24 +48,12 @@ public class MyController {
 	public  String musicLists(@PathVariable String musicType, HttpServletRequest request){
 		String result = null;
 		String itemID = null;
-		Connection connection = null;
-		try {
-			Class.forName(configInfo.getJdbcDriver());
-			connection = DriverManager.getConnection(configInfo.getJdbcUrl(), configInfo.getJdbcUsername(), configInfo.getJdbcPassword());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		itemID = request.getParameter("id");
 		if (itemID == null) {
-			List<EntityList> list = new DBmanager().getMusicList(musicType, connection);
-			result = Pojo2Json.pojo2String(list);
+			List<BaseDao> lists = jdbcMusicEntity.getList();
+			result = Pojo2Json.pojo2String(lists);
 		} else {
-			MusicEntity item = new DBmanager().getMusicItem(itemID, connection);
+			MusicEntity item = (MusicEntity)jdbcMusicEntity.getObjById(Integer.parseInt(itemID));
 			result = Pojo2Json.pojo2String(item);
 		}
 		return result;
@@ -86,6 +63,7 @@ public class MyController {
 	@RequestMapping("/test")
 	@ResponseBody
 	public void printInfo() {
-		System.out.println(configInfo.toString());
+		System.out.println("jdbcCuisine: " + jdbcCuisineEntity.toString());
+		System.out.println("jdbcMusic: " + jdbcMusicEntity.toString());
 	}
 }

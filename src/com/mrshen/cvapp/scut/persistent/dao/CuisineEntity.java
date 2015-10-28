@@ -1,8 +1,8 @@
-package com.mrshen.cvapp.scut.model;
+package com.mrshen.cvapp.scut.persistent.dao;
 
-public class CuisineEntity {
+public class CuisineEntity extends BaseDao{
 	private int dishId;
-	private String diskName;
+	private String dishName;
 	private String dishVideoAddr;
 	private String dishDesc;
 	//	1 for yuecai, 0 for others
@@ -13,11 +13,11 @@ public class CuisineEntity {
 	public void setId(int id) {
 		this.dishId = id;
 	}
-	public String getDiskName() {
-		return diskName;
+	public String getDishName() {
+		return dishName;
 	}
-	public void setDiskName(String diskName) {
-		this.diskName = diskName;
+	public void setDishName(String dishName) {
+		this.dishName = dishName;
 	}
 	public String getDishVideoAddr() {
 		return dishVideoAddr;
@@ -37,10 +37,10 @@ public class CuisineEntity {
 	public void setType(int type) {
 		this.type = type;
 	}
-	public CuisineEntity(int id, String diskName, String dishVideoAddr, String dishDesc, int type) {
+	public CuisineEntity(int id, String dishName, String dishVideoAddr, String dishDesc, int type) {
 		super();
 		this.dishId = id;
-		this.diskName = diskName;
+		this.dishName = dishName;
 		this.dishVideoAddr = dishVideoAddr;
 		this.dishDesc = dishDesc;
 		this.type = type;

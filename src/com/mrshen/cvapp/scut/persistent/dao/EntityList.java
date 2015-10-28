@@ -1,6 +1,6 @@
-package com.mrshen.cvapp.scut.model;
+package com.mrshen.cvapp.scut.persistent.dao;
 
-public class EntityList {
+public class EntityList extends BaseDao{
 	private int id;
 	private String name;
 	public int getId() {
